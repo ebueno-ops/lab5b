@@ -3,6 +3,7 @@ package ca.sait.lab5b.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +28,21 @@ public class ShoppingListServlet extends HttpServlet {
             throws ServletException, IOException {
         getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
         //getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
+            String query = request.getQueryString();
 
+            if (query != null && query.contains("logout"))
+            {
+                session.invalidate();
+
+                request.setAttribute("message", "Successfully logged out.");
+            }        
+         else {
+            //getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
+            response.sendRedirect("register");
+                return;
+        }
+        }   
+        getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
     }
 
     /**
